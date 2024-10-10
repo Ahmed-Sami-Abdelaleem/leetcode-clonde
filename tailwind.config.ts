@@ -8,6 +8,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      maskImage: {
+        star: 'url("/path/to/star-mask.svg")',
+      },
+      maskSize: {
+        cover: "cover",
+        "50": "50%",
+      },
+      maskPosition: {
+        center: "center",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
