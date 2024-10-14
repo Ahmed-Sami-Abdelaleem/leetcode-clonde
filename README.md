@@ -233,9 +233,7 @@ The **Competitive Coding Platform** is designed to serve two primary user groups
 
 The **Competitive Coding Platform** is a comprehensive tool for fostering coding skills, providing a well-rounded experience for both coders and problem setters. By emphasizing competitive contests, detailed challenges, leaderboards, and real-time feedback, the platform stands to grow its user base, retain engagement, and monetize through premium features. Its focus on community building and continuous skill development makes it an attractive platform for competitive programmers, educators, and coding enthusiasts alike.
 
-### System Design for Competitive Coding Platform
-
-### System Architecture for Competitive Coding Platform
+### System Design & Architecture for Competitive Coding Platform
 
 ### Use Case Diagram for Competitive Coding Platform
 
@@ -253,8 +251,113 @@ The **Competitive Coding Platform** is a comprehensive tool for fostering coding
 
 ### Component Diagram for Competitive Coding Platform
 
-### API Design for Competitive Coding Platform
 
 ### Database Design for Competitive Coding Platform
+## users (collection)
+ └── {userId} (document)
+     ├── firstName: string
+     ├── lastName: string
+     ├── email: string
+     ├── username: string
+     ├── passwordHash: string
+     ├── profilePicture: string (URL in Firebase Storage)
+     ├── bio: string (optional)
+     ├── dateOfBirth: timestamp
+     ├── role: string ("coder" or "problem_setter")
+     ├── problemsSolved: number
+     ├── problemsCreated: number
+     ├── ratings: { averageRating: number, totalRatings: number }
+     ├── createdAt: timestamp
+     └── modifiedAt: timestamp
+     ## challenges (collection)
+ └── {challengeId} (document)
+     ├── title: string
+     ├── description: string
+     ├── difficulty: string ("easy", "medium", "hard")
+     ├── testCases: array of {input: string, output: string}
+     ├── totalSubmissions: number
+     ├── successfulSubmissions: number
+     ├── tags: array of strings (e.g., ["arrays", "greedy"])
+     ├── score: number
+     ├── timeLimit: number (in milliseconds)
+     ├── memoryLimit: number (in bytes)
+     ├── solutionAvailable: boolean
+     ├── solution: string (optional, only available after solving)
+     ├── categories: array of strings (e.g., ["Dynamic Programming", "Sorting"])
+     ├── creatorId: string (userId of problem setter)
+     ├── createdAt: timestamp
+     └── modifiedAt: timestamp
+## submissions (collection)
+ └── {submissionId} (document)
+     ├── userId: string (reference to users)
+     ├── challengeId: string (reference to challenges)
+     ├── code: string
+     ├── language: string (e.g., "Python", "C++")
+     ├── status: string ("Accepted", "Wrong Answer", "Runtime Error", etc.)
+     ├── executionTime: number (in milliseconds)
+     ├── memoryUsed: number (in bytes)
+     ├── testCasesPassed: number
+     ├── totalTestCases: number
+     ├── score: number
+     ├── createdAt: timestamp
+     └── modifiedAt: timestamp
+## contests (collection)
+ └── {contestId} (document)
+     ├── name: string
+     ├── description: string
+     ├── startTime: timestamp
+     ├── endTime: timestamp
+     ├── prizePool: number (optional)
+     ├── challenges: array of {challengeId: string, points: number}
+     ├── participants: array of {userId: string, score: number}
+     ├── rankings: array of {userId: string, position: number, score: number}
+     ├── createdAt: timestamp
+     └── modifiedAt: timestamp
+## ratings_reviews (collection)
+ └── {reviewId} (document)
+     ├── userId: string (reference to users)
+     ├── targetUserId: string (who is being rated)
+     ├── rating: number (1-5 scale)
+     ├── comment: string (optional)
+     ├── createdAt: timestamp
+     └── modifiedAt: timestamp
+## leaderboard (collection)
+ └── {leaderboardId} (document)
+     ├── type: string ("global" or "contest-specific")
+     ├── contestId: string (optional, if contest-specific)
+     ├── rankings: array of {userId: string, score: number, rank: number}
+     └── updatedAt: timestamp
+## notifications (collection)
+ └── {notificationId} (document)
+     ├── userId: string (who is receiving the notification)
+     ├── type: string ("new_challenge", "contest_registration", "message_received", "review_received")
+     ├── relatedId: string (e.g., challengeId, contestId, userId)
+     ├── message: string (notification content)
+     ├── isRead: boolean
+     └── createdAt: timestamp
+## messages (collection)
+ └── {messageId} (document)
+     ├── senderId: string (reference to users)
+     ├── receiverId: string (reference to users)
+     ├── body: string (message content)
+     ├── relatedChallengeId: string (optional)
+     ├── createdAt: timestamp
+     ├── replyThread: array of {messageId: string, body: string, createdAt: timestamp} (optional)
+     └── modifiedAt: timestamp
+## wishlists (collection)
+ └── {wishlistId} (document)
+     ├── userId: string (reference to users)
+     ├── name: string (e.g., "DP Challenges")
+     ├── challenges: array of {challengeId: string}
+     ├── privacy: string ("public" or "private")
+     ├── createdAt: timestamp
+     └── modifiedAt: timestamp
+# Notes:
+Relations:
+        Firebase Firestore is a NoSQL database, meaning there are no direct "joins" between collections, but you can store references (userId, challengeId) to create relationships between entities.
+        You can use Cloud Functions to trigger updates in related documents (e.g., when a submission is made, update the challenge’s totalSubmissions count).
+ Scalability:
+        This design allows for scalability, with collections like users, challenges, submissions, and contests being independently managed and accessed.
+        Firebase Firestore handles scaling well, but as your app grows, indexing and query optimization will be crucial.
 
-### Database Schema for Competitive Coding Platform
+
