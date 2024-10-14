@@ -254,39 +254,39 @@ The **Competitive Coding Platform** is a comprehensive tool for fostering coding
 
 ### Database Design for Competitive Coding Platform
 ## users (collection)
- └── {userId} (document)
-     ├── firstName: string
-     ├── lastName: string
-     ├── email: string
-     ├── username: string
-     ├── passwordHash: string
-     ├── profilePicture: string (URL in Firebase Storage)
-     ├── bio: string (optional)
-     ├── dateOfBirth: timestamp
-     ├── role: string ("coder" or "problem_setter")
-     ├── problemsSolved: number
-     ├── problemsCreated: number
-     ├── ratings: { averageRating: number, totalRatings: number }
-     ├── createdAt: timestamp
-     └── modifiedAt: timestamp
+ - └── {userId} (document)
+   -  ├── firstName: string
+   -  ├── lastName: string
+   -  ├── email: string
+   -  ├── username: string
+   -  ├── passwordHash: string
+   -  ├── profilePicture: string (URL in Firebase Storage)
+   -  ├── bio: string (optional)
+   -  ├── dateOfBirth: timestamp
+   -  ├── role: string ("coder" or "problem_setter")
+   -  ├── problemsSolved: number
+   -  ├── problemsCreated: number
+   -  ├── ratings: { averageRating: number, totalRatings: number }
+   -  ├── createdAt: timestamp
+   -  └── modifiedAt: timestamp
      ## challenges (collection)
- └── {challengeId} (document)
-     ├── title: string
-     ├── description: string
-     ├── difficulty: string ("easy", "medium", "hard")
-     ├── testCases: array of {input: string, output: string}
-     ├── totalSubmissions: number
-     ├── successfulSubmissions: number
-     ├── tags: array of strings (e.g., ["arrays", "greedy"])
-     ├── score: number
-     ├── timeLimit: number (in milliseconds)
-     ├── memoryLimit: number (in bytes)
-     ├── solutionAvailable: boolean
-     ├── solution: string (optional, only available after solving)
-     ├── categories: array of strings (e.g., ["Dynamic Programming", "Sorting"])
-     ├── creatorId: string (userId of problem setter)
-     ├── createdAt: timestamp
-     └── modifiedAt: timestamp
+- └── {challengeId} (document)
+ -    ├── title: string
+  -   ├── description: string
+   -  ├── difficulty: string ("easy", "medium", "hard")
+    - ├── testCases: array of {input: string, output: string}
+    - ├── totalSubmissions: number
+    - ├── successfulSubmissions: number
+    - ├── tags: array of strings (e.g., ["arrays", "greedy"])
+     -  ├── score: number
+    - ├── timeLimit: number (in milliseconds)
+   -  ├── memoryLimit: number (in bytes)
+   -  ├── solutionAvailable: boolean
+   -  ├── solution: string (optional, only available after solving)
+   -  ├── categories: array of strings (e.g., ["Dynamic Programming", "Sorting"])
+   -  ├── creatorId: string (userId of problem setter)
+   -  ├── createdAt: timestamp
+   -  └── modifiedAt: timestamp
 ## submissions (collection)
  └── {submissionId} (document)
      ├── userId: string (reference to users)
